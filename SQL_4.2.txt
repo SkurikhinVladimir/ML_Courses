@@ -1,0 +1,52 @@
+WITH visitor_counts AS (
+    SELECT
+        COUNT(*) AS total_visitors,
+        SUM(CASE WHEN "Genre" = 'Male' THEN 1 ELSE 0 END) AS male_count,
+        SUM(CASE WHEN "Genre" = 'Female' THEN 1 ELSE 0 END) AS female_count
+    FROM mall_customers
+)
+SELECT
+    total_visitors,
+    male_count,
+    female_count,
+    ROUND((male_count::numeric / total_visitors) * 100, 2) AS male_proportion,
+    ROUND((female_count::numeric / total_visitors) * 100, 2) AS female_proportion
+FROM visitor_counts;
+
+
+SELECT *
+FROM mall_customers
+WHERE "Genre" = 'Male'
+ORDER BY 
+    "Age" ASC,
+    "Annual_Income" DESC,
+    "Spending_Score" ASC;
+
+
+SELECT "AERO".company.name AS company, "AERO".passenger.name AS passengers
+FROM "AERO".passenger
+JOIN "AERO".pass_in_trip ON "AERO".passenger.id_psg  = "AERO".pass_in_trip.id_psg
+JOIN "AERO".trip ON "AERO".pass_in_trip.trip_no = "AERO".trip.trip_no
+JOIN "AERO".company ON "AERO".trip.id_comp  = "AERO".company.id_comp
+ORDER BY "AERO".passenger.name ASC;
+
+SELECT p.name AS passengers
+FROM "AERO".passenger p
+LEFT JOIN "AERO".pass_in_trip pit ON p.id_psg = pit.id_psg
+WHERE pit.id_psg IS NULL;
+
+SELECT "AERO".passenger.name as name, "AERO".trip.town_to  as town_to 
+FROM "AERO".passenger
+JOIN "AERO".pass_in_trip ON "AERO".passenger.id_psg  = "AERO".pass_in_trip.id_psg
+JOIN "AERO".trip ON "AERO".pass_in_trip.trip_no = "AERO".trip.trip_no
+where "AERO".passenger.name = 'Nikole Kidman'  
+
+select "COMP".pc.price 
+from product
+JOIN "COMP".pc ON "COMP".product.model  = "COMP".pc.model
+where "COMP".product.maker = 'A'
+
+select "COMP".product.maker as marker, "COMP".printer.model as model
+from product
+right join "COMP".printer ON "COMP".product.model  = "COMP".printer.model
+where  "COMP".printer.type  = 'Laser'

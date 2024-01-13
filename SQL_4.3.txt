@@ -1,0 +1,21 @@
+select country, "Armed Forces size"
+from public.shm_world_data 
+where country like 'Qatar'
+
+select country, "Fertility Rate"
+from public.shm_world_data 
+where "Fertility Rate" < 2
+
+
+select country, abbreviation, "Life expectancy"
+from public.shm_world_data 
+where abbreviation like 'S%' or "Life expectancy"<60
+
+
+select country, "Official language"
+from public.shm_world_data 
+where "Official language" = 'English'
+
+select country, "Official language", "Maternal mortality ratio", "Life expectancy"
+from public.shm_world_data 
+where ("Official language" = 'English' and "Maternal mortality ratio" < 20) or "Life expectancy" < 60
